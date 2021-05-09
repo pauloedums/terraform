@@ -26,8 +26,20 @@ resource "azurerm_network_security_group" "sg_aula" {
     resource_group_name = azurerm_resource_group.rg_terraform_desafio.name
 
     security_rule {
-        name                       = "SSH"
+        name                       = "mysql"
         priority                   = 1001
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "3306"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+    }
+
+    security_rule {
+        name                       = "SSH"
+        priority                   = 1002
         direction                  = "Inbound"
         access                     = "Allow"
         protocol                   = "Tcp"
@@ -39,7 +51,7 @@ resource "azurerm_network_security_group" "sg_aula" {
 
     security_rule {
         name                       = "HTTPInbound"
-        priority                   = 1002
+        priority                   = 1003
         direction                  = "Inbound"
         access                     = "Allow"
         protocol                   = "Tcp"
